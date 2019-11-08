@@ -1,4 +1,6 @@
 import React from 'react';
+
+import 'bootstrap/dist/css/min.css'
 import './App.css';
 
 function App() {
