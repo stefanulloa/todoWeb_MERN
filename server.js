@@ -11,8 +11,8 @@ app.use(bodyParser.json());
 //access mongoDB URI
 const db = require('./config/keys.js').mongoURI;
 
-//use routes
-app.use('./routes/api/items.js');
+//any command relating to /api/items excute "items" functions
+app.use('/api/items', items);
 
 //connect to mongo
 //.then because connect() allows promise, we can catch errors with .catch 
