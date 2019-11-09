@@ -25,7 +25,7 @@ class AppNavbar extends Component {
         });
     }
 
-    //Navbar dark (to know what color to use for letters), expand (sm for small screens)
+    //Navbar dark (to know what color to use for letters), expand (hamburger menu, sm for small screens)
     //Collapse we have to indicate it is for a navbar
     //Nav ml/auto alligns links to the right, we indicate it is for navbar
     render() {
