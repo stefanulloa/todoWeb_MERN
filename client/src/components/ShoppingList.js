@@ -43,7 +43,7 @@ class ShoppingList extends Component {
                             <CSSTransition key={id} timeout={500} classNames="fade">
                                 <ListGroupItem>
                                     <Button 
-                                        ClassName="remove-btn"
+                                        className="remove-btn"
                                         color="danger" 
                                         size="sm" 
                                         //we remove item (FROM UI) by using filter method that sets as items those that don't correspond with that id
