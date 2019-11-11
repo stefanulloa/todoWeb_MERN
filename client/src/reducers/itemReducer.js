@@ -21,8 +21,13 @@ export default function(state = initialState, action) {
             };
         case DELETE_ITEM:
             return {
-                // if line "...state," is added (as taught), it does not have any effect
+                // if line "...state," is added here (as taught), it does not have any effect
                 items: state.items.filter(item => item.id !== action.payload)
+            };
+        case ADD_ITEM:
+            return {
+                // if line "...state," is added here (as taught), it does not have any effect
+                items: [action.payload, ...state.items]
             };
         default:
             return state;
