@@ -37,8 +37,12 @@ class ShoppingList extends Component {
                                         className="remove-btn"
                                         color="danger"
                                         size="sm"
-                                        //bind required
-                                        onClick={this.onDeleteClick.bind(this,id)}
+                                        //when a component method explicetely receives any parameter, we have to create a function to wrap the main function that will be passed
+                                        //otherwise, the method will be called when rendering the component, executing it before needed
+                                        //we use an arrow function, we could have also used binding "onClick={ this.onDeleteClick.bind(this, id) }", nonetheless binding in render is not recommended
+                                        onClick={() => {
+                                            this.onDeleteClick(id);
+                                        }}
                                     >
                                         &times;
                                     </Button>
