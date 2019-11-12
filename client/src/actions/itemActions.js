@@ -1,7 +1,6 @@
 //this is where the request to backend occurs
 
 import axios from 'axios';
-
 import { GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING } from './types';
 
 export const getItems = () => dispatch => {
@@ -35,8 +34,8 @@ export const addItem = item => dispatch => {
 };
 
 //this function could be used to show a component will data is loading
-export const setItemsLoading = () => {
-    return {
+export const setItemsLoading = () => dispatch => {
+    dispatch({
         type: ITEMS_LOADING
-    };
+    });
 };

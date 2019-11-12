@@ -6,7 +6,7 @@ const items = require('./routes/api/items');
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 //access mongoDB URI
 const db = require('./config/keys.js').mongoURI;
@@ -15,8 +15,9 @@ const db = require('./config/keys.js').mongoURI;
 app.use('/api/items', items);
 
 //connect to mongo
-//.then because connect() allows promise, we can catch errors with .catch 
-mongoose.connect(db)
+//.then because connect() allows promise, we can catch errors with .catch
+mongoose
+    .connect(db)
     .then(() => console.log('MongoDB connected...'))
     .catch(err => console.log(err));
 
