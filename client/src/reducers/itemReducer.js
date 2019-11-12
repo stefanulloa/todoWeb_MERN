@@ -1,14 +1,15 @@
-import uuid from "uuid";
-import { GET_ITEMS, ADD_ITEM, DELETE_ITEM } from "../actions/types";
+import uuid from 'uuid';
+import {
+    GET_ITEMS,
+    ADD_ITEM,
+    DELETE_ITEM,
+    ITEMS_LOADING
+} from '../actions/types';
 
 //for now the data is hardcoded until connecting with backend
 const initialState = {
-    items: [
-        { id: uuid(), name: "Eggs" },
-        { id: uuid(), name: "Oranges" },
-        { id: uuid(), name: "Bread" },
-        { id: uuid(), name: "Shampoo" }
-    ]
+    items: [],
+    loading: false //activated while data is being fetched
 };
 
 //the reducer needs a function to perform actions on the states
@@ -17,18 +18,28 @@ export default function(state = initialState, action) {
     switch (action.type) {
         case GET_ITEMS:
             return {
-                ...state
+                ...state,
+                items: action.payload,
+                loading: false
             };
         case DELETE_ITEM:
             return {
+                //note thw change from "id" to "_id" because of mongodb
                 // if line "...state," is added here (as taught), it does not have any effect
-                items: state.items.filter(item => item.id !== action.payload)
+                items: state.items.filter(item => item._id !== action.payload)
             };
         case ADD_ITEM:
             return {
                 // if line "...state," is added here (as taught), it does not have any effect
                 items: [action.payload, ...state.items]
             };
+        case ITEMS_LOADING:
+            return {
+                //although state has not changed it has to be passed
+                ...state,
+                loading: true
+            };
+
         default:
             return state;
     }

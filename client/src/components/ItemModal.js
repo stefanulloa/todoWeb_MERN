@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
     Button,
     Modal,
@@ -8,17 +8,15 @@ import {
     FormGroup,
     Label,
     Input
-} from "reactstrap";
+} from 'reactstrap';
 
-import { connect } from "react-redux";
-import { addItem } from "../actions/itemActions";
-
-import uuid from "uuid";
+import { connect } from 'react-redux';
+import { addItem } from '../actions/itemActions';
 
 class ItemModal extends Component {
     state = {
         modal: false,
-        name: ""
+        name: ''
     };
 
     toggle = () => {
@@ -39,7 +37,6 @@ class ItemModal extends Component {
         e.preventDefault();
 
         const newItem = {
-            id: uuid(),
             name: this.state.name
         };
 
@@ -54,7 +51,7 @@ class ItemModal extends Component {
             <div>
                 <Button
                     color="dark"
-                    style={{ marginBottom: "2rem" }}
+                    style={{ marginBottom: '2rem' }}
                     onClick={this.toggle}
                 >
                     Add Item
@@ -78,7 +75,7 @@ class ItemModal extends Component {
                                 />
                                 <Button
                                     color="dark"
-                                    style={{ marginTop: "2rem" }}
+                                    style={{ marginTop: '2rem' }}
                                     block
                                 >
                                     Add Item
