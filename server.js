@@ -2,12 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 
+//this package allows to access json inside config file more conveniently
+//config folder files (1 in this case) are not being tracked by git because they contain sensitive data
+const config = require('config');
+
 const app = express();
 
 app.use(express.json());
 
 //access mongoDB URI
-const db = require('./config/keys.js').mongoURI;
+const db = config.get('mongoURI');
 
 //connect to mongo
 //.then because connect() allows promise, we can catch errors with .catch
