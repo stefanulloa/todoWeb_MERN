@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
 
 // @route POST api/auth
-// @description Authenticate user
+// @description Login/Authenticate user
 // @access Public
 router.post('/', (req, res) => {
     //using destructuring to access the desired passed data
@@ -24,29 +24,29 @@ router.post('/', (req, res) => {
     User.findOne({ email }).then(user => {
         if (!user) return res.status(400).json({ msg: 'User does not exists' });
 
-        bcrypt.compare(password, user.password)
-            .then(isMatch => {
-                //in case password is not correct
-                if(!isMatch) return res.status(400).json({ msg: 'Invalid credentials '})
-                
-                jwt.sign(
-                    { id: user.id },
-                    config.get('jwtSecret'),
-                    { expiresIn: 3600 },
-                    (err, token) => {
-                        if (err) throw err;
-                        res.json({
-                            //same as "token: token"
-                            token,
-                            user: {
-                                id: user.id,
-                                name: user.name,
-                                email: user.email
-                            }
-                        });
-                    }
-                );
-            })
+        bcrypt.compare(password, user.password).then(isMatch => {
+            //in case password is not correct
+            if (!isMatch)
+                return res.status(400).json({ msg: 'Invalid credentials ' });
+
+            jwt.sign(
+                { id: user.id },
+                config.get('jwtSecret'),
+                { expiresIn: 3600 },
+                (err, token) => {
+                    if (err) throw err;
+                    res.json({
+                        //same as "token: token"
+                        token,
+                        user: {
+                            id: user.id,
+                            name: user.name,
+                            email: user.email
+                        }
+                    });
+                }
+            );
+        });
     });
 });
 

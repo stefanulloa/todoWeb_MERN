@@ -39,6 +39,7 @@ router.post('/', (req, res) => {
                 newUser.password = hash;
                 newUser.save().then(user => {
                     //we want to generate a user toker to authenticate (we are using the id to verify the user)
+                    //we set the payload argument to be the user id
                     //expiration time is optional
                     jwt.sign(
                         { id: user.id },
