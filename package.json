@@ -14,7 +14,9 @@
   "author": "Stefano Ulloa",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "concurrently": "^5.0.0",
+    "config": "^3.2.4",
     "express": "^4.17.1",
     "mongoose": "^5.7.8"
   },
