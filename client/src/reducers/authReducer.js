@@ -9,14 +9,14 @@ import {
     REGISTER_FAIL
 } from '../actions/types';
 
-const iniitialSate = {
+const initialSate = {
     token = localStorage.getItem('token'),
     isAuthenticated: null,
     isLoading: false,
     user: null
 }
 
-export default function(state = iniitialSate, action){
+export default function(state = initialSate, action){
     switch(action.type){
         case USER_LOADING:
             return{
@@ -31,7 +31,7 @@ export default function(state = iniitialSate, action){
                 isLoading: false,
                 user: action.payload
             }
-        case LOGGIN_SUCCESS:
+        case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
             return{
                 ...state,
@@ -44,6 +44,8 @@ export default function(state = iniitialSate, action){
         case LOGIN_FAIL:
         case LOGOUT_SUCCESS:
         case REGISTER_FAIL:
+            //in case of error, we remove any token
+            localStorage.removeItem('token');
             return{
                 ...state,
                 token: null,

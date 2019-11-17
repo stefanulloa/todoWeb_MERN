@@ -34,8 +34,10 @@ export const addItem = item => dispatch => {
 };
 
 //this function could be used to show a component will data is loading
-export const setItemsLoading = () => dispatch => {
-    dispatch({
+//this action does not work with dispatch because it doesnt have
+//to work asynchronally with requests to server
+export const setItemsLoading = () => {
+    return {
         type: ITEMS_LOADING
-    });
+    };
 };
