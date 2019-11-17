@@ -13,7 +13,8 @@ function auth(req, res, next) {
     const token = req.header('x-auth-token');
 
     //check for token
-    if (!token) res.status(401).json({ msg: 'Authorization denied' });
+    //important to return the res, otherwise we will get error due to sensing more than one res response
+    if (!token) return res.status(401).json({ msg: 'Authorization denied' });
 
     try {
         //verify token
