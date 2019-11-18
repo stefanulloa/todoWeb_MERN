@@ -11,6 +11,7 @@ import {
     Container
 } from 'reactstrap';
 import RegisterModal from './auth/RegisterModal';
+import Logout from './auth//Logout';
 
 class AppNavbar extends Component {
     //we dont need constructor because we are using arrow functions
@@ -40,6 +41,9 @@ class AppNavbar extends Component {
                             <Nav className="ml-auto" navbar>
                                 <NavItem>
                                     <RegisterModal />
+                                </NavItem>
+                                <NavItem>
+                                    <Logout />
                                 </NavItem>
                             </Nav>
                         </Collapse>

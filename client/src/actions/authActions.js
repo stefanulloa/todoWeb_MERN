@@ -75,6 +75,13 @@ export const register = ({ name, email, password }) => dispatch => {
         });
 };
 
+//logout user
+export const logout = () => {
+    return {
+        type: LOGOUT_SUCCESS
+    };
+};
+
 //set up headers with token for axios request
 export const tokenConfig = getState => {
     //get token from localstorage (in auth reducer)
