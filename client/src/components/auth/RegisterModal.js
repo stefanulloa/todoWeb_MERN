@@ -8,12 +8,14 @@ import {
     FormGroup,
     Label,
     Input,
-    NavLink
+    NavLink,
+    Alert
 } from 'reactstrap';
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { register } from '../../actions/authActions';
+import { clearErrors } from '../../actions/errorActions';
 
 class RegisterModal extends Component {
     state = {
@@ -25,7 +27,27 @@ class RegisterModal extends Component {
         msg: null
     };
 
+    //this will be called once we try to summit the register func
+    componentDidUpdate(prevProps) {
+        //deconstructing
+        const { error, isAuthenticated } = this.props;
+        //if something has changed (error occuring)
+        if (error !== prevProps.error) {
+            //check for the register error
+            if (error.id === 'REGISTER_FAIL') {
+                this.setState({ msg: error.msg.msg });
+            } else {
+                this.setState({ msg: null });
+            }
+        }
+
+        //we close the modal if registering goes correctly
+        if (this.state.modal && isAuthenticated) this.toggle();
+    }
+
     toggle = () => {
+        //if we close the modal, we have to clear the error message
+        this.props.clearErrors();
         this.setState({
             modal: !this.state.modal
         });
@@ -59,6 +81,7 @@ class RegisterModal extends Component {
 
     //this modal will be access from a navlink, so that we can include it
     //to the existing appnavbar component
+    //in case of error we use alert to show message
     render() {
         return (
             <div>
@@ -69,6 +92,9 @@ class RegisterModal extends Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>Register</ModalHeader>
                     <ModalBody>
+                        {this.state.msg ? (
+                            <Alert color="danger"> {this.state.msg} </Alert>
+                        ) : null}
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup>
                                 <Label for="name">Name</Label>
@@ -120,7 +146,8 @@ RegisterModal.propTypes = {
     //not isrequired because it could be null
     isAuthenticated: PropTypes.bool,
     error: PropTypes.object.isRequired,
-    register: PropTypes.func.isRequired
+    register: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -130,4 +157,6 @@ const mapStateToProps = state => ({
     error: state.error
 });
 
-export default connect(mapStateToProps, { register })(RegisterModal);
+export default connect(mapStateToProps, { register, clearErrors })(
+    RegisterModal
+);
