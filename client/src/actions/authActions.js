@@ -38,6 +38,43 @@ export const loadUser = () => (dispatch, getState) => {
         });
 };
 
+//register user
+export const register = ({ name, email, password }) => dispatch => {
+    //headers
+    const config = {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    };
+
+    //request body that is being sent to api
+    const body = JSON.stringify({ name, email, password });
+
+    //we send both the body data and the headers to the api
+    axios
+        .post('/api/users', body, config)
+        .then(res =>
+            dispatch({
+                type: REGISTER_SUCCESS,
+                //the res is the user and token
+                payload: res.data
+            })
+        )
+        .catch(err => {
+            dispatch(
+                returnErrors(
+                    err.response.data,
+                    err.response.status,
+                    //we are setting an id for register modal to know if it has to show this error
+                    'REGISTER_FAIL'
+                )
+            );
+            dispatch({
+                type: REGISTER_FAIL
+            });
+        });
+};
+
 //set up headers with token for axios request
 export const tokenConfig = getState => {
     //get token from localstorage (in auth reducer)

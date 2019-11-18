@@ -13,6 +13,7 @@ import {
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { register } from '../../actions/authActions';
 
 class RegisterModal extends Component {
     state = {
@@ -41,8 +42,19 @@ class RegisterModal extends Component {
         //prevents the bowser behaviour
         e.preventDefault();
 
-        //close modal
-        this.toggle();
+        const { name, email, password } = this.state;
+
+        //create user object
+        const newUser = {
+            name,
+            email,
+            password
+        };
+
+        this.props.register(newUser);
+
+        //in this modal we dont close when attempting to register
+        //because in case of error we want to output error message
     };
 
     //this modal will be access from a navlink, so that we can include it
@@ -79,7 +91,7 @@ class RegisterModal extends Component {
                                     className="mb-3"
                                     onChange={this.onChange}
                                 />
-                                <Label for="password">password</Label>
+                                <Label for="password">Password</Label>
                                 <Input
                                     type="password"
                                     name="password"
@@ -93,7 +105,7 @@ class RegisterModal extends Component {
                                     style={{ marginTop: '2rem' }}
                                     block
                                 >
-                                    Add Item
+                                    Register user
                                 </Button>
                             </FormGroup>
                         </Form>
@@ -107,7 +119,8 @@ class RegisterModal extends Component {
 RegisterModal.propTypes = {
     //not isrequired because it could be null
     isAuthenticated: PropTypes.bool,
-    error: PropTypes.object.isRequired
+    error: PropTypes.object.isRequired,
+    register: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -117,4 +130,4 @@ const mapStateToProps = state => ({
     error: state.error
 });
 
-export default connect(mapStateToProps, {})(RegisterModal);
+export default connect(mapStateToProps, { register })(RegisterModal);
