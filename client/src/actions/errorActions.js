@@ -1,4 +1,4 @@
-import { GET_ERROS, CLEAR_ERRORS } from './types';
+import { GET_ERRORS, CLEAR_ERRORS } from './types';
 
 //error actions do not work with dispatch because they dont have
 //to work asynchronally with requests to server
@@ -6,7 +6,7 @@ import { GET_ERROS, CLEAR_ERRORS } from './types';
 //id is optional
 export const returnErrors = (msg, status, id = null) => {
     return {
-        type: GET_ERROS,
+        type: GET_ERRORS,
         payload: { msg, status, id }
     };
 };
