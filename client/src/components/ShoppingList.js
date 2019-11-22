@@ -34,19 +34,22 @@ class ShoppingList extends Component {
                                 classNames="fade"
                             >
                                 <ListGroupItem>
-                                    <Button
-                                        className="remove-btn"
-                                        color="danger"
-                                        size="sm"
-                                        //when a component method explicetely receives any parameter, we have to create a function to wrap the main function that will be passed
-                                        //otherwise, the method will be called when rendering the component, executing it before needed
-                                        //we use an arrow function, we could have also used binding "onClick={ this.onDeleteClick.bind(this, id) }", nonetheless binding in render is not recommended
-                                        onClick={() => {
-                                            this.onDeleteClick(_id);
-                                        }}
-                                    >
-                                        &times;
-                                    </Button>
+                                    {this.props.isAuthenticated ? (
+                                        <Button
+                                            className="remove-btn"
+                                            color="danger"
+                                            size="sm"
+                                            //when a component method explicetely receives any parameter, we have to create a function to wrap the main function that will be passed
+                                            //otherwise, the method will be called when rendering the component, executing it before needed
+                                            //we use an arrow function, we could have also used binding "onClick={ this.onDeleteClick.bind(this, id) }", nonetheless binding in render is not recommended
+                                            onClick={() => {
+                                                this.onDeleteClick(_id);
+                                            }}
+                                        >
+                                            &times;
+                                        </Button>
+                                    ) : null}
+
                                     {name}
                                 </ListGroupItem>
                             </CSSTransition>
@@ -61,17 +64,16 @@ class ShoppingList extends Component {
 //to check the new properties of the component
 ShoppingList.propTypes = {
     getItems: PropTypes.func.isRequired,
-    item: PropTypes.object.isRequired
+    item: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool
 };
 
 //this function changes a state to a prop (a component property) so that it can be used on the frontend
 const mapStateToProps = state => ({
     //".item" because it was specified as such on rootreducer (inside combinereducers)
-    item: state.item
+    item: state.item,
+    isAuthenticated: state.auth.isAuthenticated
 });
 
 //we have to connect the component to the app redux store
-export default connect(
-    mapStateToProps,
-    { getItems, deleteItem }
-)(ShoppingList);
+export default connect(mapStateToProps, { getItems, deleteItem })(ShoppingList);
