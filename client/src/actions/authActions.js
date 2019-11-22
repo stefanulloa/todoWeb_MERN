@@ -75,6 +75,43 @@ export const register = ({ name, email, password }) => dispatch => {
         });
 };
 
+//login user
+export const login = ({ email, password }) => dispatch => {
+    //headers
+    const config = {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    };
+
+    //request body that is being sent to api
+    const body = JSON.stringify({ email, password });
+
+    //we send both the body data and the headers to the api
+    axios
+        .post('/api/auth', body, config)
+        .then(res =>
+            dispatch({
+                type: LOGIN_SUCCESS,
+                //the res is the user and token
+                payload: res.data
+            })
+        )
+        .catch(err => {
+            dispatch(
+                returnErrors(
+                    err.response.data,
+                    err.response.status,
+                    //we are setting an id for login modal to know if it has to show this error
+                    'LOGIN_FAIL'
+                )
+            );
+            dispatch({
+                type: REGISTER_FAIL
+            });
+        });
+};
+
 //logout user
 export const logout = () => {
     return {
